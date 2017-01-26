@@ -1,0 +1,53 @@
+i--标题-->
+# -> <H1></H1>
+## -> <H2></H2>
+.
+.
+.
+###### -> <H6></H6>
+
+<--引用-->
+> -> blockquotes引用
+>> -> 引用嵌套
+(Ps 引用区块可以包括其他语法，如标贴，列表，代码块etc)
+
+<--列表-->
+<--无序列表-->
+* space 
++ space
+- space
+<ul>
+<li>..</li>
+</ul>
+<--有序列表-->
+num.space
+eg: 1. blabla
+
+<ol>
+<li>..<li>
+</ol>
+
+
+<--链接-->
+[...](url)
+[...]: url "content"
+<a href="url">content</a>
+
+<--强调-->
+<--斜体-->
+*content*
+_content_
+<em>content</em>
+
+<--粗体-->
+**content**
+__content__
+<strong>content</strong>
+*/_ need to match
+
+<--图片-->
+![text](url to img)
+
+<--自动链接-->
+<http://url>
+trans to <a href="url">http://url</a>

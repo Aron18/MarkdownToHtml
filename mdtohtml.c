@@ -16,7 +16,7 @@ void replace(){
 	rplc(3,"<h4>");	//####
 	rplc(4,"<h5>"); //#####
 	rplc(5,"<h6>"); //######
-	rplc(6,"")
+	rplc(6,""); 
 }
 int main(){
     replace();
@@ -29,8 +29,8 @@ int main(){
 	//printf("%s\n",md1);
 	scanf("%s",html2);
 	//printf("%s\n",html2);
-	fp1=fopen(md1,"w");
-	fp2=fopen(html2,"w");
+	fp1=fopen(md1,"a+");	//打开 markdown 文件
+	fp2=fopen(html2,"a+");	//准备输出 html 文件
 	if(fp1==NULL){
 		printf("%s doesn't exist\n",md1);
 		exit(0);
