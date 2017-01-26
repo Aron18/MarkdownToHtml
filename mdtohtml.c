@@ -2,7 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 #define rplc(x,y){strcpy(s[x].tag,y);s[x].size=strlen(y);}
-#define nmemb 100	//写入nmemb数目
+#define nl(*fp){fputc("\n",fp);}	//往文件写入换行
+#define nmemb 1000	//写入nmemb数目
 
 struct tt{
 	char tag[100];
@@ -11,12 +12,18 @@ struct tt{
 
 void replace(){
 	rplc(0,"<h1>");	//#
-	rplc(1,"<h2>");	//##
-	rplc(2,"<h3>");	//###
-	rplc(3,"<h4>");	//####
-	rplc(4,"<h5>"); //#####
-	rplc(5,"<h6>"); //######
-	rplc(6,""); 
+	rplc(1,"</h1>");
+	rplc(2,"<h2>");	//##
+	rplc(3,"</h2>"); 
+	rplc(4,"<h3>");	//###
+	rplc(5,"</h3>"); 
+	rplc(6,"<h4>");	//####
+	rplc(7,"</h4");
+	rplc(8,"<h5>"); //#####
+	rplc(9,"</h5>");
+	rplc(10,"<h6>"); //######
+	rplc(11,"</h6>");
+	rplc(12,"") 
 }
 int main(){
     replace();
