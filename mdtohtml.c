@@ -52,7 +52,7 @@ int main(){
 	//printf("%s\n",md1);
 	scanf("%s",html2);
 	//printf("%s\n",html2);
-	if((fp1=fopen(md1,"r+"))==NULL){	//打开 markdown 文件
+	if((fp1=fopen(md1,"r"))==NULL){	//打开 markdown 文件
 		printf("%s doesn't exist\n",md1);
 		exit(0);
 	}
@@ -62,9 +62,10 @@ int main(){
 		exit(0);
 	}
 	/*写入函数*/
-	//fwrite(s[24].tag,sizeof(s[24]),1,fp1);
+	//fwrite(s[24].tag,sizeof(s[24]),1,fp2);
 	nl(fp1);
-	//fwrite(s[22].tag,sizeof(s[23]),1,fp1);
+	//fwrite(s[22].tag,sizeof(s[23]),1,fp2);
 	fclose(fp1);
 	fclose(fp2);
 }
+
