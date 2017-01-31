@@ -34,7 +34,7 @@ void replace(){
 	rplc(17,"</li>")
 	rplc(18,"<ul>"); //* space && + space && - space
 	rplc(19,"</ul>");	//无序列表
-	rplc(20,"<em>"); //斜体 *text* && _text_
+rplc(20,"<em>"); //斜体 *text* && _text_
 	rplc(21,"</em>");
 	rplc(22,"<strong>"); //粗体 **text** && __text__
 	rplc(23,"</strong");
@@ -52,20 +52,19 @@ int main(){
 	//printf("%s\n",md1);
 	scanf("%s",html2);
 	//printf("%s\n",html2);
-	fp1=fopen(md1,"a+");	//打开 markdown 文件
-	fp2=fopen(html2,"a+");	//准备输出 html 文件
-	if(fp1==NULL){
+	if((fp1=fopen(md1,"r+"))==NULL){	//打开 markdown 文件
 		printf("%s doesn't exist\n",md1);
 		exit(0);
 	}
+	fp2=fopen(html2,"a+");	//准备输出 html 文件
 	if(fp2==NULL){
 		printf("%s doesn't exist\n",html2);
 		exit(0);
 	}
 	/*写入函数*/
-	fwrite(s[24].tag,sizeof(s[24]),1,fp1);
+	//fwrite(s[24].tag,sizeof(s[24]),1,fp1);
 	nl(fp1);
-	fwrite(s[22].tag,sizeof(s[23]),1,fp1);
+	//fwrite(s[22].tag,sizeof(s[23]),1,fp1);
 	fclose(fp1);
 	fclose(fp2);
 }
