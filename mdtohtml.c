@@ -15,6 +15,11 @@ void nl(FILE *fp){
     fprintf(fp,"\r\n");
     }	//写入换行
 
+void sp(int n,FILE *fp){
+    for(int i=0;i<n;i++)
+        fprintf(fp,"\t");
+}   //写入n个制表符，4个空格
+
 void inite(char *a){
 	memset(a,0,sizeof(a));
 }	//初始化数组
@@ -24,6 +29,22 @@ struct tt{
 	int size;
 }s[nmemb];
 
+void head(FILE *fp){
+    char a[] = {<!DOCTYPE HTML>};
+    char b[] = {<html>};
+    char c[] = {<head>};
+    char d[] = {<meta charset="utf-8">};
+    char e[] = {<meta http-equiv="Content-Type" content="text/html" />};
+    char f[] = {<link href="css/task6.css" rel="stylesheet" type="text/css" />};
+    char g[] = {<title>task 6</title>};
+    char h[] = {</head>};
+    fwrite(a,sizeof(a),1,fp);
+    nl(fp);
+    fwrite(b,sizeof(b),1,fp);
+    nl(fp);
+    fwrite(c,sizeof(c),1,fp);
+    
+}
 void replace(){
 	rplc(0,"<h1>");	//#
 	rplc(1,"</h1>");
