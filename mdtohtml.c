@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<memory.h>
+#include<stack.h>
 
 #define rplc(x,y){strcpy(s[x].tag,y);s[x].size=strlen(y);}
 #define nmemb 1000	//写入nmemb数目
