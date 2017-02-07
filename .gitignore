@@ -1,3 +1,5 @@
 # c
 *.html
 *.out
+*.o
+*.exe
