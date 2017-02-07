@@ -16,7 +16,8 @@ void nl(FILE *fp){
     }	//写入换行
 
 void sp(int n,FILE *fp){
-    for(int i=0;i<n;i++)
+    int i;
+    for(i=0;i<n;i++)
         fprintf(fp,"\t");
 }   //写入n个制表符，4个空格
 
@@ -30,20 +31,39 @@ struct tt{
 }s[nmemb];
 
 void head(FILE *fp){
-    char a[] = {<!DOCTYPE HTML>};
-    char b[] = {<html>};
-    char c[] = {<head>};
-    char d[] = {<meta charset="utf-8">};
-    char e[] = {<meta http-equiv="Content-Type" content="text/html" />};
-    char f[] = {<link href="css/task6.css" rel="stylesheet" type="text/css" />};
-    char g[] = {<title>task 6</title>};
-    char h[] = {</head>};
-    fwrite(a,sizeof(a),1,fp);
+    char a1[] = {"<!DOCTYPE HTML>"};
+    char a2[] = {"<html>"};
+    char a3[] = {"<head>"};
+    char a4[] = {"<meta charset=\"utf-8\">"};
+    char a5[] = {"<meta http-equiv=\"Content-Type\" content=\"text/html\" />"};
+    char a6[] = {"<link href=\"CSS/test.css\" rel=\"stylesheet\" type=\"text/css\" />"};
+    char a7[] = {"<title>task</title>"};
+    char a8[] = {"</head>"};
+    char a9[] = {"<body>"};
+    fwrite(a1,sizeof(a1),1,fp);
     nl(fp);
-    fwrite(b,sizeof(b),1,fp);
+    fwrite(a2,sizeof(a2),1,fp);
     nl(fp);
-    fwrite(c,sizeof(c),1,fp);
-    
+    sp(1,fp);
+    fwrite(a3,sizeof(a3),1,fp);
+    nl(fp);
+    sp(2,fp);
+    fwrite(a4,sizeof(a4),1,fp);
+    nl(fp);
+    sp(2,fp);
+    fwrite(a5,sizeof(a5),1,fp);
+    nl(fp);
+    sp(2,fp);
+    fwrite(a6,sizeof(a6),1,fp);
+    nl(fp);
+    sp(2,fp);
+    fwrite(a7,sizeof(a7),1,fp);
+    nl(fp);
+    sp(1,fp);
+    fwrite(a8,sizeof(a8),1,fp);
+    nl(fp);
+    sp(1,fp);
+    fwrite(a9,sizeof(a9),1,fp);
 }
 void replace(){
 	rplc(0,"<h1>");	//#
@@ -80,22 +100,25 @@ int main(){
 	char html2[LEN];
 	char buffer[LEN];
 	inite(buffer);
-	FILE *fp1;
-	FILE *fp2;
+	FILE *fp1;	//指向markdown
+	FILE *fp2;	//指向html
+	FILE *fp3;	//指向css
 	//输入markdown名，输出html名
-	printf("plz enter that file route you want to transfer for:%s\n",md1);
+	printf("plz enter that file route you want to transfer for:\t");
 	scanf("%s",md1);
-	printf("plz enter the file name that %s\n",html2);
+	printf("plz enter the output file name \t");
 	scanf("%s",html2);
 	if((fp1=fopen(md1,"r"))==NULL){	//打开 markdown 文件
 		printf("%s doesn't exist\n",md1);
 		exit(0);
 	}
-	fp2=fopen(html2,"a+");	//准备输出 html 文件
+	fp2=fopen(html2,"wt+");	//准备输出 html 文件
 	if(fp2==NULL){
 		printf("%s doesn't exist\n",html2);
 		exit(0);
 	}
+	fp3=fopen("CSS/test.css","wt+");
+	head(fp2);
 
 	do{
        fgets(buffer,100,fp1);
