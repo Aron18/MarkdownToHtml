@@ -12,7 +12,7 @@ void check(){
     ;
 } //检查读取字符串是否含有markdown语法
 
-int flag[LEN]={0}; 	//记录有什么tag，再写入不同css
+int flag[100]={0}; 	//记录有什么tag，再写入不同css
 
 void inite(char *a){
 	memset(a,0,sizeof(a));
@@ -37,13 +37,13 @@ void head(FILE *fp){
     char a9[] = {"<body>"};
     fwrite(a1,sizeof(a1),1,fp);
     nl(fp);
-    fwrte(a2,fp,1);
-    fwrte(a3,fp,2);
-    fwrte(a4,fp,2);
-    fwrte(a5,fp,2);
-    fwrte(a6,fp,2);
-    fwrte(a7,fp,1);
-    fwrte(a8,fp,1);
+    ft(a2,fp,1);
+    ft(a3,fp,2);
+    ft(a4,fp,2);
+    ft(a5,fp,2);
+    ft(a6,fp,2);
+    ft(a7,fp,1);
+    ft(a8,fp,1);
     fwrite(a9,sizeof(a9),1,fp);
 }
 void replace(){

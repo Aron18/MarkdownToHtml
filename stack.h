@@ -1,7 +1,7 @@
 #define LEN 100
 #define ERROR -1
 #define OK 0
-typedef struct Stck{
+typedef struct Stack{
     char buffer[LEN];
     int top;    //栈顶指针
 }Stack;

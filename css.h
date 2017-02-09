@@ -8,12 +8,12 @@ void nl(FILE *fp){
     fprintf(fp,"\r\n");
     }	//写入换行
 
-void fwrte(char *a,FILE *fp,int n=1){
+void ft(char *a,FILE *fp,int n){
 	nl(fp);
 	sp(n,fp);
 	fwrite(a,sizeof(a),1,fp);
 }	//a写入字符串 fp写入文件指针 n写入多少个制表符
- 
+
 char b1[] = {"body{"};
 char b2[] = {"width : 100%;"};
 char b3[] = {"display : table;"};
@@ -21,9 +21,9 @@ char b4[] = {"}"};
 
 void body(FILE *fp){
 	fwrite(b1,sizeof(b1),1,fp);
-	fwrte(b2,fp);
-	fwrte(b3,fp);
-	fwrte(b4,fp);
+	ft(b2,fp,1);
+	ft(b3,fp,1);
+	ft(b4,fp,1);
 }
 
-void 
+void
