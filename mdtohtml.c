@@ -3,6 +3,7 @@
 #include<string.h>
 #include<memory.h>
 #include"stack.h"
+#include"css.h"
 
 #define rplc(x,y){strcpy(s[x].tag,y);s[x].size=strlen(y);}
 #define nmemb 1000	//写入nmemb数目
@@ -11,15 +12,7 @@ void check(){
     ;
 } //检查读取字符串是否含有markdown语法
 
-void nl(FILE *fp){
-    fprintf(fp,"\r\n");
-    }	//写入换行
-
-void sp(int n,FILE *fp){
-    int i;
-    for(i=0;i<n;i++)
-        fprintf(fp,"\t");
-}   //写入n个制表符，4个空格
+int flag[LEN]={0}; 	//记录有什么tag，再写入不同css
 
 void inite(char *a){
 	memset(a,0,sizeof(a));
@@ -28,7 +21,9 @@ void inite(char *a){
 struct tt{
 	char tag[100];
 	int size;
-}s[nmemb];
+}s[nmemb];		//替换的标签
+
+Stack steam;	//读取markdown字符串
 
 void head(FILE *fp){
     char a1[] = {"<!DOCTYPE HTML>"};
@@ -42,27 +37,13 @@ void head(FILE *fp){
     char a9[] = {"<body>"};
     fwrite(a1,sizeof(a1),1,fp);
     nl(fp);
-    fwrite(a2,sizeof(a2),1,fp);
-    nl(fp);
-    sp(1,fp);
-    fwrite(a3,sizeof(a3),1,fp);
-    nl(fp);
-    sp(2,fp);
-    fwrite(a4,sizeof(a4),1,fp);
-    nl(fp);
-    sp(2,fp);
-    fwrite(a5,sizeof(a5),1,fp);
-    nl(fp);
-    sp(2,fp);
-    fwrite(a6,sizeof(a6),1,fp);
-    nl(fp);
-    sp(2,fp);
-    fwrite(a7,sizeof(a7),1,fp);
-    nl(fp);
-    sp(1,fp);
-    fwrite(a8,sizeof(a8),1,fp);
-    nl(fp);
-    sp(1,fp);
+    fwrte(a2,fp,1);
+    fwrte(a3,fp,2);
+    fwrte(a4,fp,2);
+    fwrte(a5,fp,2);
+    fwrte(a6,fp,2);
+    fwrte(a7,fp,1);
+    fwrte(a8,fp,1);
     fwrite(a9,sizeof(a9),1,fp);
 }
 void replace(){
