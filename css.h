@@ -18,12 +18,34 @@ char b1[] = {"body{"};
 char b2[] = {"width : 100%;"};
 char b3[] = {"display : table;"};
 char b4[] = {"}"};
+char b5[] = {"p{"};
+char b6[] = {"font-size : 2em;"};
+char b7[] = {"color: #484848"};
+char b8[] = {"border-bottom: 2px solid #bbb";}
+char b9[] = {"margin : 0.1em;"};
+char b10[] = {"img{"};
+char b11[] = {"width : 0.6em"};
+char b12[] = {"height : 0.4em"};
 
 void body(FILE *fp){
 	fwrite(b1,sizeof(b1),1,fp);
 	ft(b2,fp,1);
 	ft(b3,fp,1);
-	ft(b4,fp,1);
+	ft(b4,fp,0);
 }
 
-void
+void p(FILE *fp){
+	ft(b5,fp,0);
+	ft(b6,fp,1);
+	ft(b7,fp,1);
+	ft(b8,fp,1);
+	ft(b9,fp,1);
+	ft(b4,fp,0);
+}
+
+void img(FILE *fp){
+	ft(b10,fp,0);
+	ft(b11,fp,1);
+	ft(b12,fp,1);
+	ft(b4,fp,0);
+}
