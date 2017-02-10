@@ -8,7 +8,7 @@
 #define rplc(x,y){strcpy(s[x].tag,y);s[x].size=strlen(y);}
 #define nmemb 1000	//写入nmemb数目
 
-void check(){
+void check(char *a){
     ;
 } //检查读取字符串是否含有markdown语法
 
@@ -36,7 +36,6 @@ void head(FILE *fp){
     char a8[] = {"</head>"};
     char a9[] = {"<body>"};
     fwrite(a1,sizeof(a1),1,fp);
-    nl(fp);
     ft(a2,fp,1);
     ft(a3,fp,2);
     ft(a4,fp,2);
@@ -46,6 +45,7 @@ void head(FILE *fp){
     ft(a8,fp,1);
     fwrite(a9,sizeof(a9),1,fp);
 }
+
 void replace(){
 	rplc(0,"<h1>");	//#
 	rplc(1,"</h1>");
@@ -73,6 +73,8 @@ void replace(){
 	rplc(23,"</strong");
 	rplc(24,"<img src=\" "); //img
 	rplc(25,"\" />");
+	rplc(26,"</body>");
+	rplc(27,"</html>");
 }			//	漏写表格，记得补
 
 int main(){
@@ -93,20 +95,20 @@ int main(){
 		printf("%s doesn't exist\n",md1);
 		exit(0);
 	}
-	fp2=fopen(html2,"wt+");	//准备输出 html 文件
+	fp2=fopen(html2,"a+");	//准备输出 html 文件
 	if(fp2==NULL){
 		printf("%s doesn't exist\n",html2);
 		exit(0);
 	}
-	fp3=fopen("CSS/test.css","wt+");
-	head(fp2);
+	fp3=fopen("CSS/test.css","a+");
+	head(fp2);		//写入html基本元素
 
-	do{
+	/*do{
        fgets(buffer,100,fp1);
-       check();
+       check(buffer);
        //printf("%s\n",buffer);
        inite(buffer);
-       }while(fgetc(fp1)!= EOF);
+       }while(fgetc(fp1)!= EOF);*/
 
 	/*写入函数*/
 	//fwrite(s[24].tag,sizeof(s[24]),1,fp2);
@@ -114,4 +116,6 @@ int main(){
 	//fwrite(s[22].tag,sizeof(s[23]),1,fp2);
 	fclose(fp1);
 	fclose(fp2);
+	fclose(fp3);
+
 }
