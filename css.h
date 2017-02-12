@@ -11,7 +11,7 @@ void nl(FILE *fp){
 void ft(char *a,FILE *fp,int n){
 	nl(fp);
 	sp(n,fp);
-	fwrite(a,sizeof(a),strlen(a),fp);
+	fwrite(a,sizeof(a),1,fp);
 }	//a写入字符串 fp写入文件指针 n写入多少个制表符
 
 char b1[] = {"body{"};

@@ -25,60 +25,49 @@ struct tt{
 
 Stack steam;	//读取markdown字符串
 
-void head(FILE *fp){
-    char a1[] = {"<!DOCTYPE HTML>"};
-    char a2[] = {"<html>"};
-    char a3[] = {"<head>"};
-    char a4[] = {"<meta charset=\"utf-8\">"};
-    char a5[] = {"<meta http-equiv=\"Content-Type\" content=\"text/html\" />"};
-    char a6[] = {"<link href=\"CSS/test.css\" rel=\"stylesheet\" type=\"text/css\" />"};
-    char a7[] = {"<title>task</title>"};
-    char a8[] = {"</head>"};
-    char a9[] = {"<body>"};
-    fwrite(a1,sizeof(a1),1,fp);
-    ft(a2,fp,1);
-    ft(a3,fp,2);
-    ft(a4,fp,2);
-    ft(a5,fp,2);
-    ft(a6,fp,2);
-    ft(a7,fp,1);
-    ft(a8,fp,1);
-    fwrite(a9,sizeof(a9),1,fp);
-}
-
 void replace(){
-	rplc(0,"<h1>");	//#
-	rplc(1,"</h1>");
-	rplc(2,"<h2>");	//##
-	rplc(3,"</h2>");
-	rplc(4,"<h3>");	//###
-	rplc(5,"</h3>");
-	rplc(6,"<h4>");	//####
-	rplc(7,"</h4");
-	rplc(8,"<h5>"); //#####
-	rplc(9,"</h5>");
-	rplc(10,"<h6>"); //######
-	rplc(11,"</h6>");
-	rplc(12,"<p>"); //text
-	rplc(13,"</p>");
-	rplc(14,"<ol>"); //有序列表 num. space
-	rplc(15,"</ol>");
-	rplc(16,"<li>"); //list
-	rplc(17,"</li>")
-	rplc(18,"<ul>"); //* space && + space && - space
-	rplc(19,"</ul>");	//无序列表
-	rplc(20,"<em>"); //斜体 *text* && _text_
-	rplc(21,"</em>");
-	rplc(22,"<strong>"); //粗体 **text** && __text__
-	rplc(23,"</strong");
-	rplc(24,"<img src=\" "); //img
-	rplc(25,"\" />");
-	rplc(26,"</body>");
-	rplc(27,"</html>");
+    rplc(1,"<!DOCTYPE HTML>");
+    rplc(2,"<html>");
+    rplc(3,"<head>");
+    rplc(4,"<meta charset=\"utf-8\">");
+    rplc(5,"<meta http-equiv=\"Content-Type\" content=\"text/html\" />");
+    rplc(6,"<link href=\"CSS/test.css\" rel=\"stylesheet\" type=\"text/css\" />");
+    rplc(7,"<title>task</title>");
+    rplc(8,"</head>");
+    rplc(9,"<body>");
+	rplc(10,"<h1>");	//#
+	rplc(11,"</h1>");
+	rplc(12,"<h2>");	//##
+	rplc(13,"</h2>");
+	rplc(14,"<h3>");	//###
+	rplc(15,"</h3>");
+	rplc(16,"<h4>");	//####
+	rplc(17,"</h4");
+	rplc(18,"<h5>"); //#####
+	rplc(19,"</h5>");
+	rplc(20,"<h6>"); //######
+	rplc(21,"</h6>");
+	rplc(22,"<p>"); //text
+	rplc(23,"</p>");
+	rplc(24,"<ol>"); //有序列表 num. space
+	rplc(25,"</ol>");
+	rplc(26,"<li>"); //list
+	rplc(27,"</li>")
+	rplc(28,"<ul>"); //* space && + space && - space
+	rplc(29,"</ul>");	//无序列表
+	rplc(30,"<em>"); //斜体 *text* && _text_
+	rplc(31,"</em>");
+	rplc(32,"<strong>"); //粗体 **text** && __text__
+	rplc(33,"</strong");
+	rplc(34,"<img src=\" "); //img
+	rplc(35,"\" />");
+	rplc(36,"</body>");
+	rplc(37,"</html>");
 }			//	漏写表格，记得补
 
 int main(){
     replace();
+    int i;
 	char md1[LEN];
 	char html2[LEN];
 	char buffer[LEN];
@@ -101,19 +90,19 @@ int main(){
 		exit(0);
 	}
 	fp3=fopen("CSS/test.css","a+");
-	head(fp2);		//写入html基本元素
-
+    for(i=1;i<10;i++){
+        if(i==1)
+            fwrite(s[i].tag,sizeof(s[i]),1,fp2);
+        else{
+            ft(s[i].tag,fp2,1);
+        }
+    }
 	/*do{
        fgets(buffer,100,fp1);
        check(buffer);
        //printf("%s\n",buffer);
        inite(buffer);
        }while(fgetc(fp1)!= EOF);*/
-
-	/*写入函数*/
-	//fwrite(s[24].tag,sizeof(s[24]),1,fp2);
-	//nl(fp1);
-	//fwrite(s[22].tag,sizeof(s[23]),1,fp2);
 	fclose(fp1);
 	fclose(fp2);
 	fclose(fp3);
