@@ -5,13 +5,13 @@ void sp(int n,FILE *fp){
 }   //写入n个制表符，4个空格
 
 void nl(FILE *fp){
-    fprintf(fp,"\n");
+    fprintf(fp,"\n\r");
     }	//写入换行
 
 void ft(char *a,FILE *fp,int n){
 	nl(fp);
 	sp(n,fp);
-	fwrite(a,sizeof(a),1,fp);
+	fprintf(fp, a);
 }	//a写入字符串 fp写入文件指针 n写入多少个制表符
 
 char b1[] = {"body{"};

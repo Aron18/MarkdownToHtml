@@ -12,7 +12,8 @@ void check(char *a){
     ;
 } //检查读取字符串是否含有markdown语法
 
-int flag[100]={0}; 	//记录有什么tag，再写入不同css
+int flag[100]={0};
+int fflag[100]={0}; //记录有什么tag，再写入不同css
 
 void inite(char *a){
 	memset(a,0,sizeof(a));
@@ -92,7 +93,7 @@ int main(){
 	fp3=fopen("CSS/test.css","a+");
     for(i=1;i<10;i++){
         if(i==1)
-            fwrite(s[i].tag,sizeof(s[i]),1,fp2);
+            fprintf(fp2,s[i].tag);
         else{
             ft(s[i].tag,fp2,1);
         }
