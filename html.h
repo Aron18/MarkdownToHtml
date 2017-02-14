@@ -25,11 +25,11 @@ void replace(){
 	rplc(15,"</h3>");
 	rplc(16,"<h4>");	//####
 	rplc(17,"</h4");
-	rplc(18,"<h5>"); //#####
+	rplc(18,"<h5>"); 	//#####
 	rplc(19,"</h5>");
-	rplc(20,"<h6>"); //######
+	rplc(20,"<h6>"); 	//######
 	rplc(21,"</h6>");
-	rplc(22,"<p>"); //text
+	rplc(22,"<p>"); 	//text
 	rplc(23,"</p>");
 	rplc(24,"<ol>"); //有序列表 num. space
 	rplc(25,"</ol>");

@@ -6,10 +6,6 @@
 #include"css.h"
 #include"html.h"
 
-void check(char *a){
-    ;
-} //检查读取字符串是否含有markdown语法
-
 int flag[100]={0};
 int fflag[100]={0}; //记录有什么tag，再写入不同css
 
@@ -17,7 +13,41 @@ void inite(char *a){
 	memset(a,0,sizeof(a));
 }	//初始化数组
 
-Stack steam;	//读取markdown字符串
+void check(char *a,FILE *fp){
+	int i,j,count=0;
+	char tmp;
+    int len = strlen(a);	//计算读入字符串的长度方便分析
+    Stack steam;	//读取markdown字符串
+    for(i=0;i<len;i++){
+    	if(a[i]=='#'){
+    		count++;
+    		printf("test2\n");
+    		continue;
+    	}
+    	if(a[i]=='#' && a[i+1]!='#'){
+    		nl(fp);
+    		fprintf(fp,"<h%d>",count);
+    		flag[0]=1;	//flag[1] 记录是否写入已写入<h>
+    		for(j=i+2;j<len;j++){
+    			fprintf(fp,a[j]);
+    		}
+    		i=j;
+    	}	//处理标题
+    	if((a[i]>='0' || a[i]<='9') && a[i+1]=='.' && a[i+2]==' '){
+    		if(flag[1]==0){
+    		nl(fp);
+    		fprintf(fp,"<ol>");
+    		flag[1]==1;	//flag[1] 记录是否写入已写入<ol>
+ 			}
+    		nl(fp);
+    		fprintf(fp,"<li>");
+    		for(j=i+2;j<len;j++){
+    			fprintf(fp,a[j]);
+    		}
+    		i=j;
+    	}	//处理有序列表
+    }
+} //检查读取字符串是否含有markdown语法
 
 int main(){
     replace();
@@ -52,7 +82,7 @@ int main(){
     }
 	do{
        fgets(buffer,100,fp1);
-       check(buffer);
+       check(buffer,fp2);
        //printf("%s\n",buffer);
        inite(buffer);
        }while(fgetc(fp1)!= EOF);
