@@ -18,18 +18,17 @@ void inite(char *a){
 
 void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分析){
     Stack steam;	//读取markdown字符串
-    count=0;
-    for(i=0;i<len+1;i++){   //记录语法位置
+    count=0 ;
+    for(i=0;i<len+1;i++){   //i记录语法位置
     	if(a[i]=='#'){
-    		count++;
-    		printf("%d#\n",count);
+    		count+=1;
     		continue;
     	}
-    	if(count!=0 && a[i]!='#'){
+    	if(count!=0){
     		nl(fp);
-    		fprintf(fp,"<h%d>",count);
-    		temp=count;
-    		count=0;
+            fprintf(fp,"<h%d>",count);
+            temp=count;
+            count=0;
     		flag[0]=1;	//flag[1] 记录是否写入已写入<h>
     		break;
     	}	//处理标题
@@ -45,25 +44,26 @@ void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分
                 flag[1]=1;  //前一行写入了<li>
                 flag[2]=1;  //写入了<li>
  			}
- 			continue;
+ 			i+=3;
+ 			break;
     	}	//处理有序列表
     }
 } //检查读取字符串是否含有markdown语法
 
 void match(FILE *fp,int a[]){
     if(a[0]==1){
-        fprintf(fp,"<h%d>",temp);
+        fprintf(fp,"</h%d>",temp);
         count=0;
         a[0]=0;
-    }
-    if(a[1]==1){
-        fprintf(fp,"</li>");
-        a[1]=0;
     }
     if(a[1]==0 && a[3]==1){
         nl(fp);
         fprintf(fp,"</ol>");
         a[3]=0;
+    }
+    if(a[1]==1){
+        fprintf(fp,"</li>");
+        a[1]=0;
     }
 }
 
@@ -98,14 +98,16 @@ int main(){
             ft(s[h].tag,fp2,1);
         }
     }
-	do{
-       fgets(buffer,100,fp1);
-       len=strlen(buffer);
-       check(buffer,fp2,len);
+    while(fgets(buffer,100,fp1)){
+        len=strlen(buffer);
+        check(buffer,fp2,len);
+        for(;i<len;i++){
+            fprintf(fp2,"%c",buffer[i]);
+            }
        //printf("%s\n",buffer);
        match(fp2,flag);
        inite(buffer);
-            }while(fgetc(fp1)!= EOF);
+    }
 	fclose(fp1);
 	fclose(fp2);
 	fclose(fp3);
