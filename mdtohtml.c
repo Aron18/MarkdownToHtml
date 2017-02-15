@@ -42,12 +42,37 @@ void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分
                 nl(fp);
                 fprintf(fp,"<li>");
                 flag[1]=1;  //前一行写入了<li>
-                flag[2]=1;  //写入了<li>
+                flag[2]=1;  //写入了<li>，写css
  			}
  			i+=3;
  			break;
     	}	//处理有序列表
-    }
+    	if((a[i]=='*' || a[i]=='+' || a[i]=='-') && a[i+1]==' '){
+            if(flag[6]==0){
+                nl(fp);
+                fprintf(fp,"<ul>");
+                flag[6]=1;	//flag[1] 记录是否写入已写入<ol>
+            }
+            if(flag[6]==1){
+                nl(fp);
+                fprintf(fp,"<li>");
+                flag[4]=1;  //前一行写入了<li>
+                flag[5]=1;  //写入了<li>，写css
+ 			}
+ 			i+=3;
+ 			break;
+    	}
+    	if(a[i]=='>'){
+            if(flag[7]==0){
+                nl(fp);
+                fprintf(fp,"<div class=\"blockquote\">");
+                flag[7]=1;  //写入了引用
+                flag[8]=1;  //写css
+                i++;
+                break;
+                }
+            }
+    	}
 } //检查读取字符串是否含有markdown语法
 
 void match(FILE *fp,int a[]){
@@ -64,6 +89,19 @@ void match(FILE *fp,int a[]){
     if(a[1]==1){
         fprintf(fp,"</li>");
         a[1]=0;
+    }
+    if(a[4]==0 && a[6]==1){
+        nl(fp);
+        fprintf(fp,"</ul>");
+        a[6]=0;
+    }
+     if(a[4]==1){
+        fprintf(fp,"</li>");
+        a[4]=0;
+    }
+    if(a[7]==1){
+        fprintf(fp,"</div>");
+        a[7]=0;
     }
 }
 
