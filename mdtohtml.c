@@ -73,19 +73,7 @@ void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分
                 break;
                 }
             }
-        if((a[i]=='*' && a[i+1]=='*') || (a[i]=='_' && a[i+1]=='_')){
-            i3=i;   //记录粗体语法位置
-            j=i;
-            flag[9]=1;  //等待匹配
-            for(;j<len;j++){
-                if(flag[9]==1 && (a[j]=='*' && a[j+1]=='*') || (a[j]=='_' && a[j+1]=='_')){
-                    i2=j;
-                    i1=i3;
-                    flag[9]+=1; //flag[9]==2时，语法匹配
-                }
-            }   //检查粗体语法
         }
-    }
 } //检查读取字符串是否含有markdown语法
 
 void match(FILE *fp,int a[]){
@@ -157,32 +145,36 @@ int main(){
         len=strlen(buffer);
         i=0;
         check(buffer,fp2,len);
-        if(flag[9]==2 || flag[10] ==2){
+        /*if(flag[9]==2 || flag[10] ==2){
+            nl(fp2);
             for(k=0;k<len;k++){
                 if(k==i1){
+                    printf("s3\n");
                     fprintf(fp2,"<strong>");
-                    k+=2;
+                    k+=1;
                     continue;
                 }
                 if(k==i2){
+                    printf("success");
                     match(fp2,flag);
                     k+=2;
-                    i=i2+2;
+                    i=j+2;
                     check(buffer,fp2,len);
                     continue;
                 }
                 fprintf(fp2,"%c",buffer[k]);
             }
         }
-        else{
+        else{*/
             for(;i<len;i++){
                 fprintf(fp2,"%c",buffer[i]);
                 }
             //printf("%s\n",buffer);
             match(fp2,flag);
-            }
+           // }
        inite(buffer);
     }
+
 	fclose(fp1);
 	fclose(fp2);
 	fclose(fp3);
