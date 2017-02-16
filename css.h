@@ -9,6 +9,7 @@ void nl(FILE *fp){
     }	//写入换行
 
 void ft(char *a,FILE *fp,int n){
+	nl(fp);
 	sp(n,fp);
 	fprintf(fp, a);
 }	//a写入字符串 fp写入文件指针 n写入多少个制表符
