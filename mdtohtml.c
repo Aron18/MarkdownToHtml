@@ -11,6 +11,7 @@ int fflag[100]={0}; //记录有什么tag，再写入不同css
 int i,j;
 int count,temp;
 int len;
+int i1,i2,i3,i4;    //记录语法符号位置方便跳过
 
 void inite(char *a){
 	memset(a,0,sizeof(a));
@@ -19,7 +20,7 @@ void inite(char *a){
 void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分析){
     Stack steam;	//读取markdown字符串
     count=0 ;
-    for(i=0;i<len+1;i++){   //i记录语法位置
+    for(;i<len+1;i++){   //i记录语法位置
     	if(a[i]=='#'){
     		count+=1;
     		continue;
@@ -72,7 +73,19 @@ void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分
                 break;
                 }
             }
-    	}
+        if((a[i]=='*' && a[i+1]=='*') || (a[i]=='_' && a[i+1]=='_')){
+            i3=i;   //记录粗体语法位置
+            j=i;
+            flag[9]=1;  //等待匹配
+            for(;j<len;j++){
+                if(flag[9]==1 && (a[j]=='*' && a[j+1]=='*') || (a[j]=='_' && a[j+1]=='_')){
+                    i2=j;
+                    i1=i3;
+                    flag[9]+=1; //flag[9]==2时，语法匹配
+                }
+            }   //检查粗体语法
+        }
+    }
 } //检查读取字符串是否含有markdown语法
 
 void match(FILE *fp,int a[]){
@@ -102,6 +115,10 @@ void match(FILE *fp,int a[]){
     if(a[7]==1){
         fprintf(fp,"</div>");
         a[7]=0;
+    }
+    if(a[9]==2){
+        fprintf(fp,"</strong>");
+        a[9]=0;
     }
 }
 
@@ -138,12 +155,32 @@ int main(){
     }
     while(fgets(buffer,100,fp1)){
         len=strlen(buffer);
+        i=0;
         check(buffer,fp2,len);
-        for(;i<len;i++){
-            fprintf(fp2,"%c",buffer[i]);
+        if(flag[9]==2 || flag[10] ==2){
+            for(k=0;k<len;k++){
+                if(k==i1){
+                    fprintf(fp2,"<strong>");
+                    k+=2;
+                    continue;
+                }
+                if(k==i2){
+                    match(fp2,flag);
+                    k+=2;
+                    i=i2+2;
+                    check(buffer,fp2,len);
+                    continue;
+                }
+                fprintf(fp2,"%c",buffer[k]);
             }
-       //printf("%s\n",buffer);
-       match(fp2,flag);
+        }
+        else{
+            for(;i<len;i++){
+                fprintf(fp2,"%c",buffer[i]);
+                }
+            //printf("%s\n",buffer);
+            match(fp2,flag);
+            }
        inite(buffer);
     }
 	fclose(fp1);
