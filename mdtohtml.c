@@ -74,18 +74,36 @@ void check(char a[],FILE *fp,int len){  //计算读入字符串的长度方便�
                 break;
                 }
             }
-        if(a[i]=='*' && a[i+1]=='*'){
+        if((a[i]=='*' && a[i+1]=='*')||(a[i]=='_' && a[i+1]=='_')){
             flag[9]=1;  //等待匹配，匹配时lag[9]==2
             i1=i;   //记录位置
-            printf("s2\n");
             for(j=i+1;j<len;++j){
-                if((flag[9]==1 )&&((a[j]=='*') && (a[j+1]=='*'))){
+                if((flag[9]==1 )&&((a[j]=='*'&& a[j+1]=='*')||(a[i]=='_' && a[i+1]=='_'))){
                     flag[9]=2;  //flag[9]==2
                     i2=j;   //记录位置
                     break;
                     }
                 }
             break;
+            }
+        if(a[i]=='!' && a[i+1]=='['){
+            i1=i+1;
+            flag[10]=1; // 等待匹配，img标签
+            for(j=i+2;j<len;j++){
+                if(flag[10]==1 && a[j]==']' && a[j+1]=='('){
+                    i2=j;
+                    flag[10]=2;     // 等待匹配
+                   }
+                if(flag[10]==2 && a[j]==')'){
+                    i3=j;
+                    flag[10]=3;    //匹配
+                    nl(fp);
+                    flag[11]=1; //写css
+                    fprintf(fp,"<img src=\"");
+                    break;
+                    }
+                }
+                break;
             }
         }
 } //检查读取字符串是否含有markdown语法
@@ -121,6 +139,10 @@ void match(FILE *fp,int a[]){
     if(a[9]==2){
         fprintf(fp,"</strong>");
         a[9]=0;
+    }
+    if(a[10]==3){
+        fprintf(fp,"\">");
+        a[10]=0;
     }
 }
 
@@ -160,8 +182,8 @@ int main(){
         i=0;
         check(buffer,fp2,len);
         if(flag[9]==2){
+            nl(fp2);
             fprintf(fp2,"<p>");
-            printf("s1\n");
             for(k=0;k<len;k++){
                 if(k==i1){
                     fprintf(fp2,"<strong>");
@@ -181,19 +203,30 @@ int main(){
             }
         fprintf(fp2,"</p>");
         }
+        if(flag[10]==3){
+            for(k=i2+2;k<len;k++){
+                if(k==i3){
+                    match(fp2,flag);
+                    break;
+                }
+                fprintf(fp2,"%c",buffer[k]);
+            }
+        }
         else{
             for(;i<len;i++){
                 fprintf(fp2,"%c",buffer[i]);
                 }
             //printf("%s\n",buffer);
             match(fp2,flag);
-           // }
-        }
+            }
         inite(buffer);
     }
     body(fp3);
     if(flag[8]){
         blockquote(fp3);
+    }
+    if(flag[11]=1){
+        img(fp3);
     }
     fclose(fp1);
     fclose(fp2);
