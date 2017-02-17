@@ -78,14 +78,14 @@ void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分
             flag[9]=1;  //等待匹配，匹配时lag[9]==2
             i1=i;   //记录位置
             printf("s2\n");
-            for(j=i+2;j<len;++j){
+            for(j=i+1;j<len;++j){
                 if((flag[9]==1 )&&((a[j]=='*') && (a[j+1]=='*'))){
                     flag[9]=2;  //flag[9]==2
                     i2=j;   //记录位置
-                    printf("s3\n");
                     break;
                     }
                 }
+            break;
             }
         }
 } //检查读取字符串是否含有markdown语法
@@ -186,6 +186,10 @@ int main(){
            // }
         }
         inite(buffer);
+    }
+    body(fp3);
+    if(flag[8]){
+        blockquote(fp3);
     }
 	fclose(fp1);
 	fclose(fp2);
