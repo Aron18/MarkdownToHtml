@@ -14,57 +14,57 @@ int len;
 int i1,i2,i3,i4;    //记录语法符号位置方便跳过
 
 void inite(char *a){
-	memset(a,0,sizeof(a));
-}	//初始化数组
+    memset(a,0,sizeof(a));
+}   //初始化数组
 
-void check(char a[],FILE *fp,int len){	//计算读入字符串的长度方便分析){
-    Stack steam;	//读取markdown字符串
+void check(char a[],FILE *fp,int len){  //计算读入字符串的长度方便分析){
+    Stack steam;    //读取markdown字符串
     count=0;
     int j;
     for(;i<len+1;i++){   //i记录语法位置
-    	if(a[i]=='#'){
-    		count+=1;
-    		continue;
-    	}
-    	if(count!=0){
-    		nl(fp);
+        if(a[i]=='#'){
+            count+=1;
+            continue;
+        }
+        if(count!=0){
+            nl(fp);
             fprintf(fp,"<h%d>",count);
             temp=count;
             count=0;
-    		flag[0]=1;	//flag[1] 记录是否写入已写入<h>
-    		break;
-    	}	//处理标题
-    	if((a[i]>='0' || a[i]<='9') && (a[i+1]=='.' && a[i+2]==' ')){
-    		if(flag[3]==0){
+            flag[0]=1;  //flag[1] 记录是否写入已写入<h>
+            break;
+        }   //处理标题
+        if((a[i]>='0' || a[i]<='9') && (a[i+1]=='.' && a[i+2]==' ')){
+            if(flag[3]==0){
                 nl(fp);
                 fprintf(fp,"<ol>");
-                flag[3]=1;	//flag[1] 记录是否写入已写入<ol>
- 			}
- 			if(flag[3]==1){
+                flag[3]=1;  //flag[1] 记录是否写入已写入<ol>
+            }
+            if(flag[3]==1){
                 nl(fp);
                 fprintf(fp,"<li>");
                 flag[1]=1;  //前一行写入了<li>
                 flag[2]=1;  //写入了<li>，写css
- 			}
- 			i+=3;
- 			break;
-    	}	//处理有序列表
-    	if((a[i]=='*' || a[i]=='+' || a[i]=='-') && a[i+1]==' '){
+            }
+            i+=3;
+            break;
+        }   //处理有序列表
+        if((a[i]=='*' || a[i]=='+' || a[i]=='-') && a[i+1]==' '){
             if(flag[6]==0){
                 nl(fp);
                 fprintf(fp,"<ul>");
-                flag[6]=1;	//flag[1] 记录是否写入已写入<ol>
+                flag[6]=1;  //flag[1] 记录是否写入已写入<ol>
             }
             if(flag[6]==1){
                 nl(fp);
                 fprintf(fp,"<li>");
                 flag[4]=1;  //前一行写入了<li>
                 flag[5]=1;  //写入了<li>，写css
- 			}
- 			i+=3;
- 			break;
-    	}
-    	if(a[i]=='>'){
+            }
+            i+=3;
+            break;
+        }
+        if(a[i]=='>'){
             if(flag[7]==0){
                 nl(fp);
                 fprintf(fp,"<div class=\"blockquote\">");
@@ -127,27 +127,27 @@ void match(FILE *fp,int a[]){
 int main(){
     replace();
     int h,k;
-	char md1[LEN];
-	char html2[LEN];
-	char buffer[LEN];
-	inite(buffer);
-	FILE *fp1;	//指向markdown
-	FILE *fp2;	//指向html
-	FILE *fp3;	//指向css
-	//输入markdown名，输出html名
-	printf("plz enter that file route you want to transfer for:\t");
-	scanf("%s",md1);
-	printf("plz enter the output file name \t");
-	scanf("%s",html2);
-	if((fp1=fopen(md1,"r"))==NULL){	//打开 markdown 文件
-		printf("%s doesn't exist\n",md1);
-		exit(0);
-	}
-	if((fp2=fopen(html2,"a+"))==NULL){	//准备输出 html 文件
-		printf("%s doesn't exist\n",html2);
-		exit(0);
-	}
-	fp3=fopen("CSS/test.css","a+");
+    char md1[LEN];
+    char html2[LEN];
+    char buffer[LEN];
+    inite(buffer);
+    FILE *fp1;  //指向markdown
+    FILE *fp2;  //指向html
+    FILE *fp3;  //指向css
+    //输入markdown名，输出html名
+    printf("plz enter that file route you want to transfer for:\t");
+    scanf("%s",md1);
+    printf("plz enter the output file name \t");
+    scanf("%s",html2);
+    if((fp1=fopen(md1,"r"))==NULL){ //打开 markdown 文件
+        printf("%s doesn't exist\n",md1);
+        exit(0);
+    }
+    if((fp2=fopen(html2,"a+"))==NULL){  //准备输出 html 文件
+        printf("%s doesn't exist\n",html2);
+        exit(0);
+    }
+    fp3=fopen("CSS/test.css","a+");
     for(h=1;h<10;h++){
         if(h==1)
             fprintf(fp2,s[h].tag);
@@ -160,6 +160,7 @@ int main(){
         i=0;
         check(buffer,fp2,len);
         if(flag[9]==2){
+            fprintf(fp2,"<p>");
             printf("s1\n");
             for(k=0;k<len;k++){
                 if(k==i1){
@@ -170,12 +171,15 @@ int main(){
                 else if(k==i2){
                     match(fp2,flag);
                     k++;
+                    i=k;
+                    check(buffer,fp2,len);
                     continue;
                 }
                 else if(k!=i1 || k!=i1+1 || k!= i2 || k!=i2+2){
                     fprintf(fp2,"%c",buffer[k]);
                 }
             }
+        fprintf(fp2,"</p>");
         }
         else{
             for(;i<len;i++){
@@ -191,7 +195,7 @@ int main(){
     if(flag[8]){
         blockquote(fp3);
     }
-	fclose(fp1);
-	fclose(fp2);
-	fclose(fp3);
+    fclose(fp1);
+    fclose(fp2);
+    fclose(fp3);
 }
