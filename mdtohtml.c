@@ -105,6 +105,22 @@ void check(char a[],FILE *fp,int len){  //计算读入字符串的长度方便�
                 }
                 break;
             }
+        if(a[i]=='['){
+            i1=i;
+            flag[12]=1; //等待匹配
+            for(j=i+1;j<len;j++){
+                if(flag[12]==1 && a[j]==']' && a[j+1]=='('){
+                    i2=j;
+                    flag[12]=2; //等待匹配
+                }
+                if(flag[12]==2 && a[j]==')'){
+                    i3=j;
+                    nl(fp);
+                    flag[12]=3;
+                    fprintf(fp,"<a href=\"");
+                }
+            }
+        }
         }
 } //检查读取字符串是否含有markdown语法
 
@@ -143,6 +159,10 @@ void match(FILE *fp,int a[]){
     if(a[10]==3){
         fprintf(fp,"\">");
         a[10]=0;
+    }
+    if(a[12]==3){
+        fprintf(fp,"</a>");
+        a[12]=0;
     }
 }
 
@@ -210,6 +230,22 @@ int main(){
                     break;
                 }
                 fprintf(fp2,"%c",buffer[k]);
+            }
+        }
+        if(flag[12]==3){
+            for(k=i2+2;k<len;k++){
+                if(k==i3){
+                    fprintf(fp2,"\">");
+                    break;
+                }
+                fprintf(fp2,"%c",buffer[k]);
+            }
+            for(k=i1+1;k<i2;k++){
+                fprintf(fp2,"%c",buffer[k]);
+                if(k==i2-1){
+                    match(fp2,flag);
+                    break;
+                }
             }
         }
         else{
