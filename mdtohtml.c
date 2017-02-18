@@ -229,8 +229,10 @@ int main(){
                     match(fp2,flag);
                     break;
                 }
+                else
                 fprintf(fp2,"%c",buffer[k]);
             }
+           continue;
         }
         if(flag[12]==3){
             for(k=i2+2;k<len;k++){
